@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Página{% endblock %}
+{% block content %}
+<main role="main">
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-md-3">
+        <img src="{% static 'core/img/placeholder.png' %}" class="img-fluid"/>
+      </div>
+      <div class="col-md-6 mt-3">
+        <h3>Página de prueba</h3>
+        <p>Example</p>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

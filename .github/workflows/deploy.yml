@@ -1,0 +1,90 @@
+name: Deploy to ECR
+
+# son las condiciones paraque se ejecute automaticamente
+on:
+  push:
+    branches: 
+      - main
+    paths:
+      - blogs_app/**
+  workflow_dispatch:
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REGISTRY: public.ecr.aws/o1w2h9a8
+  ECR_REPOSITORY: blogs-app-dev
+  IMAGE_TAG: ${{ github.sha }}
+
+# public.ecr.aws/o1w2h9a8/blogs-app-dev
+
+
+jobs:
+  build:
+    name: Build Image
+    runs-on: ubuntu-latest # ejecutar con 
+
+    steps:
+
+    - name: Check out code
+      uses: actions/checkout@v2
+    
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+
+
+    # - name: Login to Amazon ECR
+    #   id: login-ecr
+    #   uses: aws-actions/amazon-ecr-login@v1
+
+    - name: login to Amazon public
+    #aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/o1w2h9a8
+      run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
+
+    
+           
+
+
+
+
+#s3://andres-environment/django-coffee/
+
+
+
+    - name: Download environment file from S3
+      env:
+        # copie de esta ruta 
+        S3_BUCKET_URL: s3://blogs-app-dev/.env # ruta s3
+                   #   
+        TARGET_PATH: . # pongalo donde yo estoy en este momento
+      run: aws s3 cp $S3_BUCKET_URL $TARGET_PATH # valla a s3 copie el dato de esta ruta y pongalo aqui donde estoy 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    - name: Build, tag, and push image to Amazon ECR
+      # env:
+
+      #   #public.ecr.aws/o1w2h9a8/web_django
+      #   ECR_REGISTRY: public.ecr.aws/o1w2h9a8
+      #   ECR_REPOSITORY: web_django
+      #   IMAGE_TAG: ${{ github.sha }}
+
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
