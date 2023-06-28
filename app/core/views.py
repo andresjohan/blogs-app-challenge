@@ -12,7 +12,7 @@ class HomePageView(TemplateView):
 
  
     def get(self,request):
-        return render(request,self.template_name,{'title':'Blogs y Registros '})
+        return render(request,self.template_name,{'title':'Blogs y Registros Update '})
 
 
 
