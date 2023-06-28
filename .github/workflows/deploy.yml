@@ -16,6 +16,7 @@ env:
   IMAGE_TAG: ${{ github.sha }}
   DEPLOYMENT_NAME: web-django-deployment
   NAMESPACE: test2
+  CLUSTER_NAME: eks-dev-cluster
 
 
 jobs:
@@ -58,6 +59,15 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
-    - name: update deployment
-      run: kubectl rollout restart deployment $DEPLOYMENT_NAME -n $NAMESPACE
+    # - name: update deployment
+    #   run: kubectl rollout restart deployment $DEPLOYMENT_NAME -n $NAMESPACE
+
+
+    - name: Run update deployment
+      uses: nikosch86/github-action-eks-kubectl@main
+      with:
+        command: rollout restart deploy $DEPLOYMENT_NAME -n $NAMESPACE
+      env:
+        EKS_CLUSTER: $CLUSTER_NAME
          
+
