@@ -48,6 +48,7 @@ jobs:
     - name: Download environment file from S3
       env:
         S3_BUCKET_URL: s3://blogs-app-dev/.env # ruta s3
+        #             :
         TARGET_PATH: . # me toma la ruta de donde estoy
       run: aws s3 cp $S3_BUCKET_URL $TARGET_PATH # valla a s3 copie el dato de esta ruta y pongalo aqui donde estoy 
 
