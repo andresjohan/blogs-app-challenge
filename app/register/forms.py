@@ -11,7 +11,7 @@ class UserCreationWithEmail(UserCreationForm):
         model = User
         fields = ('username','email','password1','password2')
     
-    # funcion para atrapar el valor del campo email 
+
 
     def clean_email(self):
 

@@ -149,13 +149,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-#Creando ruta de redireccion para nuevo app
-# LOGIN_REDIRECT_URL = 'home'
-
-# # configuracion para cuando se hace el logout
 LOGOUT_REDIRECT_URL = 'home'
 
-# Validamos que Estemos en modo Debug
+
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
     EMAIL_FILE_PATH = os.path.join(BASE_DIR,'sent_emails')
@@ -165,15 +161,6 @@ else:
 
 
 
-
-#son dos configuraciones importantes que se crean para que django
-#sepa donde almacenar archivos multimedia y aceder facilmente a ellos
-# utilizando por ejemplo la terminacion url en los archivos html 
-
-# una analogia seria como que media rooot es un almacen donde se almacenaran
-# todos los libros de una biblioteca y media_url sera el mostrador
-# o ubicacion publica donde ban los usuarios 
-# donde uno puede ir a ver o consultar un libro en especifico
 MEDIA_URL='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
