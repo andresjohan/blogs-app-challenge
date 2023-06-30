@@ -1,6 +1,0 @@
-DB_ENGINE=django.db.backends.postgresql_psycopg2
-DB_HOST=db.oqejzqvvyfdsuzemxwku.supabase.co
-DB_NAME=postgres
-DB_USER=postgres
-DB_PASSWORD=libero125libero12
-DB_PORT=5432
